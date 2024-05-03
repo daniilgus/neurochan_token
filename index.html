@@ -39,6 +39,16 @@
         document.querySelector('h1').innerHTML = 'Здравствуйте, ' + response.response[0].first_name + ' ' + response.response[0].last_name + '!';
       }
     });
+
+    VK.Auth.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        // Пользователь авторизован
+        document.getElementById('auth_indicator').innerHTML = 'Авторизован';
+      } else {
+        // Пользователь не авторизован
+        document.getElementById('auth_indicator').innerHTML = 'Не авторизован';
+      }
+    });
   </script>
 
   <div id="token" style="display: none;">
@@ -48,5 +58,7 @@
   <div id="subscribe_button" style="display: block;">
     <a href="https://vk.com/neurochan_ai">Подписаться</a>
   </div>
+
+  <div id="auth_indicator"></div>
 </body>
 </html>
