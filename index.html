@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Проверка авторизации VKontakte</title>
-    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168" charset="windows-1251"></script>
+<title>Проверка авторизации и подписки VKontakte</title>
+<script type="text/javascript" src="https://vk.com/js/api/openapi.js?168" charset="windows-1251"></script>
 </head>
 <body>
-    <h1>Проверка авторизации VKontakte</h1>
-    
-    <div id="status">
-        Статус: <span id="statusText">Проверка...</span>
-    </div>
+<h1>Проверка авторизации и подписки VKontakte</h1>
 
-    <div id="vk_auth"></div>
+<div id="status">
+Статус: <span id="statusText">Проверка...</span>
+</div>
 
-    <script type="text/javascript">
-        VK.init({ apiId: 51917420 });
+<div id="vk_auth"></div>
 
-        VK.Auth.getLoginStatus(function(response) {
-            var statusText = document.getElementById('statusText');
-            if (response.status === 'connected') {
-                statusText.innerText = 'Пользователь авторизован';
-            } else {
-                statusText.innerText = 'Пользователь не авторизован';
-            }
-        });
+<script type="text/javascript">
+VK.init({ apiId: 51917420 });
 
-        VK.Widgets.Auth("vk_auth", { authUrl: "/ru/widgets/auth" });
-    </script>
+// Проверка авторизации пользователя
+VK.Auth.getLoginStatus(function(response) {
+var statusText = document.getElementById('statusText');
+if (response.status === 'connected') {
+statusText.innerText = 'Пользователь авторизован';
+
+// Проверка подписки пользователя на сообщество
+VK.Api.call('groups.isMember', {group_id: '221397262'}, function(response) {
+if (response.member === 1) {
+  // Пользователь подписан на сообщество
+  statusText.innerText += ' и подписан на сообщество';
+} else {
+  // Пользователь не подписан на сообщество
+  statusText.innerText += ' но не подписан на сообщество';
+}
+});
+} else {
+statusText.innerText = 'Пользователь не авторизован';
+}
+});
+
+VK.Widgets.Auth("vk_auth", { authUrl: "/ru/widgets/auth" });
+</script>
 </body>
 </html>
