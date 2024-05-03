@@ -1,65 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" src="https://vk.com/js/api/openapi.js?178"></script>
-  <title>Приветствие и проверка подписки на сообщество ВКонтакте</title>
+    <title>Проверка подписки на сообщество ВКонтакте</title>
 </head>
 <body>
-  <h1>Приветствие</h1>
+    <h1>Добро пожаловать!</h1>
 
-  <div id="vk_groups"></div>
-  <script type="text/javascript">
-    VK.init({apiId: 51917420});
+    <div id="message">
+        <p>Подпишитесь на сообщество, чтобы получить доступ к контенту:</p>
+        <a href="https://vk.com/neurochan_ai">Подписаться</a>
+    </div>
 
-    VK.Widgets.Group("vk_groups", {mode: 3, width: '250px', group_id: '221397262'}, '5.131');
+    <script type="text/javascript">
+        VK.Auth.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                document.getElementById('message').innerHTML = '<p>Токен</p>';
+            }
+        });
+    </script>
 
-    VK.addCallback('onGroupChange', function(group) {
-      if (group.membership === 1) {
-        document.getElementById('token').style.display = 'block';
-        document.getElementById('subscribe_button').style.display = 'none';
-      } else {
-        document.getElementById('token').style.display = 'none';
-        document.getElementById('subscribe_button').style.display = 'block';
-      }
-    });
-
-    VK.Observer.subscribe('widgets.groups.changed', function() {
-      VK.Api.call('groups.isMember', {group_id: '221397262'}, function(response) {
-        if (response.member === 1) {
-          document.getElementById('token').style.display = 'block';
-          document.getElementById('subscribe_button').style.display = 'none';
-        } else {
-          document.getElementById('token').style.display = 'none';
-          document.getElementById('subscribe_button').style.display = 'block';
-        }
-      });
-    });
-
-    VK.Api.call('users.get', {fields: 'first_name,last_name'}, function(response) {
-      if (response.response) {
-        document.querySelector('h1').innerHTML = 'Здравствуйте, ' + response.response[0].first_name + ' ' + response.response[0].last_name + '!';
-      }
-    });
-
-    VK.Auth.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        // Пользователь авторизован
-        document.getElementById('auth_indicator').innerHTML = 'Авторизован';
-      } else {
-        // Пользователь не авторизован
-        document.getElementById('auth_indicator').innerHTML = 'Не авторизован';
-      }
-    });
-  </script>
-
-  <div id="token" style="display: none;">
-    Токен
-  </div>
-
-  <div id="subscribe_button" style="display: block;">
-    <a href="https://vk.com/neurochan_ai">Подписаться</a>
-  </div>
-
-  <div id="auth_indicator"></div>
+    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
+    <script type="text/javascript">
+        VK.init({
+            apiId: 51917420
+        });
+    </script>
 </body>
 </html>
