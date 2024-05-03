@@ -34,6 +34,12 @@
         }
       });
     });
+
+    VK.Api.call('users.get', {fields: 'first_name,last_name'}, function(response) {
+      if (response.response) {
+        document.querySelector('p').innerHTML = 'Здравствуйте, ' + response.response[0].first_name + ' ' + response.response[0].last_name + '!';
+      }
+    });
   </script>
 
   <div id="token" style="display: none;">
