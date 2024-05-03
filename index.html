@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Приветствие и проверка подписки на сообщество ВКонтакте</title>
+</head>
+<body>
+  <h1>Приветствие</h1>
+  <p>Здравствуйте, [имя пользователя]!</p>
+
+  <div id="vk_groups"></div>
+  <script type="text/javascript">
+    VK.init();
+
+    VK.Widgets.Group("vk_groups", {mode: 3, width: '250px', group_id: '221397262'}, '5.120');
+
+    VK.addCallback('onGroupChange', function(group) {
+      if (group.membership === 1) {
+        document.getElementById('token').style.display = 'block';
+        document.getElementById('subscribe_button').style.display = 'none';
+      } else {
+        document.getElementById('token').style.display = 'none';
+        document.getElementById('subscribe_button').style.display = 'block';
+      }
+    });
+  </script>
+
+  <div id="token" style="display: none;">
+    Токен
+  </div>
+
+  <div id="subscribe_button" style="display: block;">
+    <a href="https://vk.com/neurochan_ai">Подписаться</a>
+  </div>
+</body>
+</html>
