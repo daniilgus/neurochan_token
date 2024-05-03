@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Проверка подписки ВКонтакте</title>
-    <script
-  type="text/javascript"
-  src="https://vk.com/js/api/openapi.js?168"
-  charset="windows-1251"
-></script>
-<script type="text/javascript">
-  VK.init({ apiId: 51917420 });
-</script>
+    <title>Проверка авторизации VKontakte</title>
+    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168" charset="windows-1251"></script>
 </head>
 <body>
-    <h1>Добро пожаловать!</h1>
+    <h1>Проверка авторизации VKontakte</h1>
     
-    <div id="vk_auth"></div>
-    <div id="content"></div>
-    
-    VK.Auth.getLoginStatus(function(response) {
-            if (response.status === 'connected') {
-                var content = document.getElementById('content');
-                content.innerText = 'Токен';
-            } else {
-                var content = document.getElementById('content');
-                var button = document.createElement('button');
-                button.innerText = 'Подписаться на сообщество';
-                button.addEventListener('click', function() {
-                    window.open('ССЫЛКА_НА_СООБЩЕСТВО', '_blank');
-                });
-                content.appendChild(button);
-            }
+    <div id="status">
+        Статус: <span id="statusText">Проверка...</span>
+    </div>
 
-         <script type="text/javascript">
-      VK.Widgets.Auth("vk_auth", {authUrl: "/ru/widgets/auth"});
-    </script>
+    <div id="vk_auth"></div>
+
+    <script type="text/javascript">
+        VK.init({ apiId: 51917420 });
+
+        VK.Auth.getLoginStatus(function(response) {
+            var statusText = document.getElementById('statusText');
+            if (response.status === 'connected') {
+                statusText.innerText = 'Пользователь авторизован';
+            } else {
+                statusText.innerText = 'Пользователь не авторизован';
+            }
         });
+
+        VK.Widgets.Auth("vk_auth", { authUrl: "/ru/widgets/auth" });
+    </script>
 </body>
 </html>
