@@ -22,6 +22,18 @@
         document.getElementById('subscribe_button').style.display = 'block';
       }
     });
+
+    VK.Observer.subscribe('widgets.groups.changed', function() {
+      VK.Api.call('groups.isMember', {group_id: '221397262'}, function(response) {
+        if (response.member === 1) {
+          document.getElementById('token').style.display = 'block';
+          document.getElementById('subscribe_button').style.display = 'none';
+        } else {
+          document.getElementById('token').style.display = 'none';
+          document.getElementById('subscribe_button').style.display = 'block';
+        }
+      });
+    });
   </script>
 
   <div id="token" style="display: none;">
