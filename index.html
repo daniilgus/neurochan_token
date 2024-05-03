@@ -2,17 +2,17 @@
 <html>
 <head>
     <title>Проверка подписки ВКонтакте</title>
+    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168" charset="windows-1251"></script>
 </head>
 <body>
     <h1>Добро пожаловать!</h1>
-
     <div id="content"></div>
 
-    <script>
+    <script type="text/javascript">
         VK.init({
             apiId: 51917420
         });
-
+        
         VK.Auth.getLoginStatus(function(response) {
             if (response.status === 'connected') {
                 var content = document.getElementById('content');
@@ -28,7 +28,5 @@
             }
         });
     </script>
-
-    <script src="https://vk.com/js/api/openapi.js?162"></script>
 </body>
 </html>
