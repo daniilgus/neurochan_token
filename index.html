@@ -13,6 +13,10 @@
 
 <div id="vk_auth"></div>
 
+<div id="subscribe_button" style="display: none;">
+  <a href="https://vk.com/neurochan_ai">Подписаться</a>
+</div>
+
 <script type="text/javascript">
 VK.init({ apiId: 51917420 });
 
@@ -30,6 +34,7 @@ if (response.member === 1) {
 } else {
   // Пользователь не подписан на сообщество
   statusText.innerText += ' но не подписан на сообщество';
+  document.getElementById('subscribe_button').style.display = 'block';
 }
 });
 } else {
